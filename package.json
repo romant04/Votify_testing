@@ -1,0 +1,17 @@
+{
+  "name": "votify_testing",
+  "version": "1.0.0",
+  "description": "Testing of votify",
+  "main": "index.js",
+  "scripts": {
+    "e2e": "cypress open"
+  },
+  "author": "Roman Tarnai",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.11.0"
+  },
+  "dependencies": {
+    "chance": "^1.1.11"
+  }
+}
