@@ -19,14 +19,13 @@ describe("Votify login", () => {
   });
 
   it("should not allow blank email", () => {
-    cy.get('button[type="submit"]:visible').click();
-    cy.get('button[type="submit"]:visible').click(0, 50, { force: true }); // clicking out to trigger validation (close chrome message etc.)
+    cy.get("form").submit();
     cy.contains("Povinné").should("exist");
   });
 
   it("should not allow invalid email", () => {
     cy.get('input[name="email"]').type("invalid-email");
-    cy.get('button[type="submit"]:visible').click();
+    cy.get("form").submit();
     cy.contains("Nevalidní e-mail").should("exist");
   });
 
@@ -34,8 +33,7 @@ describe("Votify login", () => {
     // Fill email first
     cy.get('input[name="email"]').type(email);
 
-    cy.get('button[type="submit"]:visible').click();
-    cy.get('button[type="submit"]:visible').click(0, 50, { force: true });
+    cy.get("form").submit();
     cy.contains("Povinné").should("exist");
   });
 
@@ -44,7 +42,7 @@ describe("Votify login", () => {
     cy.get('input[name="email"]').type(email);
 
     cy.get('input[name="password"]').type("heslo");
-    cy.get('button[type="submit"]:visible').click();
+    cy.get("form").submit();
     cy.contains("Zadali jste neplatné uživatelské jméno nebo heslo").should(
       "exist"
     );
@@ -53,7 +51,7 @@ describe("Votify login", () => {
   it("should login successfully", () => {
     cy.get('input[name="email"]').type(email);
     cy.get('input[name="password"]').type(password);
-    cy.get('button[type="submit"]:visible').click();
+    cy.get("form").submit();
 
     cy.url().should("include", "app.votify.app");
   });

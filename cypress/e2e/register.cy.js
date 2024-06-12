@@ -24,23 +24,26 @@ describe("Votify register", () => {
   });
 
   it("should not allow blank email", () => {
-    cy.get('button[type="submit"]:visible').click();
-    cy.get('button[type="submit"]:visible').click(0, 50, { force: true });
+    // Fill password and password confirmation first
+    cy.get('input[name="password"]').type(password);
+    cy.get('input[name="passwordConfirm"]').type(password);
+
+    cy.get("form").submit();
     cy.contains("Povinné").should("exist");
   });
 
   it("should not allow invalid email", () => {
     cy.get('input[name="email"]').type("invalid-email");
-    cy.get('button[type="submit"]:visible').click();
+    cy.get("form").submit();
     cy.contains("Nevalidní e-mail").should("exist");
   });
 
   it("should not allow blank password", () => {
-    // Fill email first
+    // Fill email and passwordConfirmation first
     cy.get('input[name="email"]').type(email);
+    cy.get('input[name="passwordConfirm"]').type(password);
 
-    cy.get('button[type="submit"]:visible').click();
-    cy.get('button[type="submit"]:visible').click(0, 50, { force: true });
+    cy.get("form").submit();
     cy.contains("Povinné").should("exist");
   });
 
@@ -49,8 +52,7 @@ describe("Votify register", () => {
     cy.get('input[name="email"]').type(email);
     cy.get('input[name="password"]').type(password);
 
-    cy.get('button[type="submit"]:visible').click();
-    cy.get('button[type="submit"]:visible').click(0, 50, { force: true });
+    cy.get("form").submit();
     cy.contains("Povinné").should("exist");
   });
 
@@ -59,7 +61,7 @@ describe("Votify register", () => {
     cy.get('input[name="email"]').type(email);
 
     cy.get('input[name="password"]').type("heslo");
-    cy.get('button[type="submit"]:visible').click();
+    cy.get("form").submit();
     cy.contains("Musí obsahovat alespoň 8 znaků").should("exist");
   });
 
@@ -69,7 +71,7 @@ describe("Votify register", () => {
     cy.get('input[name="password"]').type(password);
 
     cy.get('input[name="passwordConfirm"]').type("different-password");
-    cy.get('button[type="submit"]:visible').click();
+    cy.get("form").submit();
     cy.contains("Kontrola hesla se neshoduje").should("exist");
   });
 
@@ -77,7 +79,7 @@ describe("Votify register", () => {
     cy.get('input[name="email"]').type(usedEmail);
     cy.get('input[name="password"]').type(password);
     cy.get('input[name="passwordConfirm"]').type(password);
-    cy.get('button[type="submit"]:visible').click();
+    cy.get("form").submit();
     cy.contains("Tento e-mail již někdo používá").should("exist");
   });
 
@@ -85,7 +87,7 @@ describe("Votify register", () => {
     cy.get('input[name="email"]').type(email);
     cy.get('input[name="password"]').type(password);
     cy.get('input[name="passwordConfirm"]').type(password);
-    cy.get('button[type="submit"]:visible').click();
+    cy.get("form").submit();
 
     cy.url().should("include", "successful-sign-up");
   });
